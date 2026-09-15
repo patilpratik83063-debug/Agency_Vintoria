@@ -6,7 +6,6 @@ import { CursorGlow } from './CursorGlow';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ConsultationModal } from './ConsultationModal';
-import { FloatingSocialDock } from './FloatingSocialDock';
 
 interface SiteShellProps {
   children: (openConsultation: (brief?: string) => void) => React.ReactNode;
@@ -48,9 +47,6 @@ export function SiteShell({ children }: SiteShellProps) {
         {/* Studio Footer with Synchronized Clocks */}
         <Footer />
       </div>
-
-      {/* Floating Scroll-Reactive Quick Connect & WhatsApp Dock */}
-      <FloatingSocialDock />
 
       {/* Global Consultation Booking & RFP Modal */}
       <ConsultationModal
