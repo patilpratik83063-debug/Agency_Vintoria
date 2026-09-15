@@ -325,7 +325,7 @@ export function SectionProjects() {
                 Close Spec
               </button>
               <a
-                href="#estimator"
+                href="/estimator"
                 onClick={() => setActiveModalProject(null)}
                 className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-semibold text-black hover:bg-white/85"
               >

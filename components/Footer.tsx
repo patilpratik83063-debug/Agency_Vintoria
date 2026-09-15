@@ -71,10 +71,10 @@ export function Footer() {
                 <li><Link href="/about#founders" className="text-white font-medium hover:text-emerald-400 transition flex items-center gap-1">Founders <ArrowUpRight size={11} /></Link></li>
                 <li><Link href="/about#philosophy" className="hover:text-white transition">Philosophy</Link></li>
                 <li><Link href="/about#how-we-think" className="hover:text-white transition">How We Think</Link></li>
-                <li><Link href="/#process" className="hover:text-white transition">6-Phase Process</Link></li>
-                <li><Link href="/#projects" className="hover:text-white transition">Selected Works</Link></li>
-                <li><Link href="/#technology" className="hover:text-white transition">Tech Stack</Link></li>
-                <li><Link href="/#contact" className="hover:text-white transition">Start a Project</Link></li>
+                <li><Link href="/process" className="hover:text-white transition">6-Phase Process</Link></li>
+                <li><Link href="/work" className="hover:text-white transition">Selected Works</Link></li>
+                <li><Link href="/ai-automation" className="hover:text-white transition">Tech Stack</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition">Start a Project</Link></li>
               </ul>
             </div>
 
@@ -83,14 +83,14 @@ export function Footer() {
                 Core Disciplines
               </span>
               <ul className="space-y-2 text-xs text-zinc-300">
-                <li><Link href="/#capabilities" className="hover:text-white transition">01 Strategy &amp; Consulting</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">02 Web Development</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">03 SaaS Products</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">04 Mobile Development</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">05 UI/UX Design</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">07 AI Development</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">08 Automation</Link></li>
-                <li><Link href="/#capabilities" className="hover:text-white transition">View All 12 Pillars →</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">01 Strategy &amp; Consulting</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">02 Web Development</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">03 SaaS Products</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">04 Mobile Development</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">05 UI/UX Design</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">07 AI Development</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">08 Automation</Link></li>
+                <li><Link href="/capabilities" className="hover:text-white transition">View All 12 Pillars →</Link></li>
               </ul>
             </div>
           </div>

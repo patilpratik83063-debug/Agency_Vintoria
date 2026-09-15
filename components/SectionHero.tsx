@@ -104,7 +104,7 @@ export function SectionHero({ onOpenConsultation }: SectionHeroProps) {
               </button>
 
               <a
-                href="#capabilities"
+                href="/capabilities"
                 id="hero-explore-work-cta"
                 className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-6 py-3.5 text-xs sm:text-sm font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:bg-white/20 hover:border-white/50 active:scale-95 shadow-lg"
               >

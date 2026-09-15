@@ -541,7 +541,7 @@ export default function AboutPage() {
                     <ArrowUpRight size={16} />
                   </button>
                   <Link
-                    href="/#capabilities"
+                    href="/capabilities"
                     className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white/15"
                   >
                     <span>Explore 230+ Capabilities</span>

@@ -14,13 +14,13 @@ interface NavbarProps {
 
 const navLinks = [
   { name: 'About Us', href: '/about' },
-  { name: 'Capabilities', href: '/#capabilities' },
-  { name: 'Selected Work', href: '/#projects' },
-  { name: 'AI Architecture', href: '/#radar' },
-  { name: 'Project Estimator', href: '/#estimator', highlight: true },
-  { name: 'Methodology', href: '/#process' },
-  { name: 'Channels', href: '/#channels' },
-  { name: 'Contact', href: '/#contact' },
+  { name: 'Capabilities', href: '/capabilities' },
+  { name: 'Selected Work', href: '/work' },
+  { name: 'AI Architecture', href: '/ai-automation' },
+  { name: 'Project Estimator', href: '/estimator', highlight: true },
+  { name: 'Methodology', href: '/process' },
+  { name: 'Channels', href: '/contact#channels' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 export function Navbar({ onOpenConsultation }: NavbarProps) {
@@ -81,7 +81,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
         >
           {navLinks.map((link, i) => (
             <Reveal key={link.name} delay={100 + i * 80}>
-              <a
+              <Link
                 id={`nav-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
                 href={link.href}
                 className={`relative inline-flex items-center text-xs font-medium transition-colors duration-300 ${
@@ -92,7 +92,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
               >
                 {link.highlight && <Sparkles size={12} className="text-white" />}
                 <span>{link.name}</span>
-              </a>
+              </Link>
             </Reveal>
           ))}
         </nav>
@@ -156,7 +156,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
               <FounderCard compact />
             </div>
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -164,7 +164,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
               >
                 <span>{link.name}</span>
                 <ArrowUpRight size={16} className="text-white/60" />
-              </a>
+              </Link>
             ))}
 
             {/* Direct WhatsApp Callout in Mobile Drawer */}
