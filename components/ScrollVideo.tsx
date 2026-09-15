@@ -3,11 +3,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Sun, Moon, Gauge, Minimize2, Maximize2, Film } from 'lucide-react';
 
-// Primary scrub asset first, CDN last. (Duplicate/unoptimized originals removed
-// to keep Vercel deploys lean.)
+// Cloudinary CDN first (fast edge delivery + byte-range seeks for smooth
+// scroll-scrubbing), plain delivery as last-resort failover. Local
+// /hero_scrub.mp4 removed from the repo to keep deploys lean.
+const CLOUDINARY_VIDEO_ID = 'b4107681-7a83-4a4b-a876-4231b80f84bd';
 const VIDEO_SOURCES = [
-  '/hero_scrub.mp4',
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4',
+  `https://res.cloudinary.com/urtnhoyc/video/upload/f_auto,q_auto:good,w_1920/${CLOUDINARY_VIDEO_ID}.mp4`,
+  `https://res.cloudinary.com/urtnhoyc/video/upload/${CLOUDINARY_VIDEO_ID}.mp4`,
 ];
 const LOCAL_POSTER_URL = '/hero-poster.jpg';
 
@@ -324,10 +326,13 @@ export function ScrollVideo() {
           key={videoSource}
           id="scroll-video-element"
           src={videoSource}
+          poster={LOCAL_POSTER_URL}
           muted
           loop
           playsInline
           preload="auto"
+          // @ts-expect-error fetchPriority is valid on video in React 19
+          fetchPriority="high"
           disablePictureInPicture
           controlsList="nodownload"
           tabIndex={-1}

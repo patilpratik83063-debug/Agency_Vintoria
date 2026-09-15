@@ -48,6 +48,9 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={inter.variable}>
+      {/* Early CDN handshake so the Cloudinary hero video starts ASAP */}
+      <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased`} suppressHydrationWarning>
         {children}
       </body>
