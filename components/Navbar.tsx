@@ -58,7 +58,7 @@ export function Navbar({ onOpenConsultation }: NavbarProps) {
                 <BrandLogo size="md" className="transition group-hover:border-white/60" />
               </div>
               <span className="text-xl font-bold tracking-tight text-white font-mono drop-shadow-sm">
-                vintoria<span className="text-white/70">.studio</span>
+                Vintoria
               </span>
             </Link>
 
