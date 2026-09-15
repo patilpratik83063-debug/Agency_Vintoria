@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Sun, Moon, Gauge, Minimize2, Maximize2, Film } from 'lucide-react';
 
 // Cloudinary hero video. The poster is the video's own first frame, so the
 // poster -> video handoff is seamless (no "old image" flash). Desktop gets
@@ -41,7 +40,6 @@ export function ScrollVideo() {
   const [scrubStalled, setScrubStalled] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(10.04);
-  const [isHudCollapsed, setIsHudCollapsed] = useState(false);
   const [scrollSpeedMode, setScrollSpeedMode] = useState<'slow' | 'standard'>('slow');
 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -82,8 +80,6 @@ export function ScrollVideo() {
 
   const SOURCES = isMobile ? MOBILE_SOURCES : DESKTOP_SOURCES;
   const videoSource = SOURCES[Math.min(sourceIndex, SOURCES.length - 1)];
-  // If scrubbing proved unworkable in this browser, cinema autoplay keeps the bg alive.
-  const effectiveMode: VideoPlaybackMode = scrubStalled && !userOverrideRef.current ? 'cinema' : playbackMode;
 
   // Advance to next source on error; mark terminal error when exhausted.
   const handleVideoError = () => {
@@ -273,55 +269,8 @@ export function ScrollVideo() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  const toggleScrollSpeed = () => {
-    setScrollSpeedMode((prev) => (prev === 'slow' ? 'standard' : 'slow'));
-  };
-
-  const cycleAtmosphere = () => {
-    if (atmosphere === 'vivid') setAtmosphere('studio');
-    else if (atmosphere === 'studio') setAtmosphere('stealth');
-    else setAtmosphere('vivid');
-  };
-
-  const togglePlaybackMode = () => {
-    userOverrideRef.current = true;
-    const nextMode = effectiveMode === 'scroll-sync' ? 'cinema' : 'scroll-sync';
-    if (nextMode === 'scroll-sync') {
-      // Re-enter scrub mode: reset stall tracking from the live position.
-      stallFramesRef.current = 0;
-      lastSeekTargetRef.current = null;
-      smoothedTimeRef.current = videoRef.current?.currentTime || 0;
-      setScrubStalled(false);
-    }
-    setPlaybackMode(nextMode);
-    if (nextMode === 'cinema' && videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    } else if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  };
-
-  // Format seconds into MM:SS.S
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = (seconds % 60).toFixed(1);
-    return `${mins.toString().padStart(2, '0')}:${secs.padStart(4, '0')}`;
-  };
-
   const isVideoLoaded = loadStatus === 'ready';
   const showPosterFallback = loadStatus !== 'ready';
-  const statusLabel =
-    loadStatus === 'error'
-      ? 'Poster Mode'
-      : loadStatus === 'loading'
-      ? 'Loading Video…'
-      : effectiveMode === 'cinema' && scrubStalled
-      ? 'Auto Play (scroll-blocked)'
-      : isScrolling
-      ? 'Scroll Motion Active'
-      : effectiveMode === 'cinema'
-      ? 'Auto Play'
-      : 'Idle · Scroll to Animate';
 
   return (
     <div
@@ -403,145 +352,6 @@ export function ScrollVideo() {
         className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/60 via-transparent to-black/65"
         aria-hidden="true"
       />
-
-      {/* Interactive Video Atmosphere HUD (Positioned bottom-right, pointer-events-auto) */}
-      <div className="absolute bottom-5 right-5 z-40 pointer-events-auto hidden sm:block">
-        <div className="rounded-2xl border border-white/20 bg-black/75 p-2.5 backdrop-blur-2xl shadow-2xl transition-all duration-300">
-          {isHudCollapsed ? (
-            <button
-              onClick={() => setIsHudCollapsed(false)}
-              className="flex items-center gap-2 px-2.5 py-1 text-[11px] font-mono text-white/90 hover:text-white transition"
-              title="Expand Video Scroll HUD"
-            >
-              <span
-                className={`h-2 w-2 rounded-full ${
-                  isScrolling || effectiveMode === 'cinema' ? 'bg-emerald-400 animate-ping' : 'bg-zinc-400'
-                }`}
-              />
-              <span>
-                {isScrolling ? 'SCROLLING' : effectiveMode === 'cinema' ? 'AUTO PLAY' : 'SCROLL TO ANIMATE'} ·{' '}
-                {atmosphere.toUpperCase()} · {loadStatus.toUpperCase()}
-              </span>
-              <Maximize2 size={12} className="text-white/60" />
-            </button>
-          ) : (
-            <div className="flex flex-col gap-2 min-w-[260px]">
-              {/* Top HUD Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-1.5 px-1">
-                <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider uppercase">
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      loadStatus === 'error'
-                        ? 'bg-red-400'
-                        : loadStatus === 'loading'
-                        ? 'bg-amber-400 animate-pulse'
-                        : isScrolling || effectiveMode === 'cinema'
-                        ? 'bg-emerald-400 animate-pulse ring-2 ring-emerald-400/40'
-                        : 'bg-zinc-400'
-                    }`}
-                  />
-                  <span
-                    className={`font-semibold ${
-                      loadStatus === 'error'
-                        ? 'text-red-300'
-                        : loadStatus === 'loading'
-                        ? 'text-amber-300'
-                        : isScrolling || effectiveMode === 'cinema'
-                        ? 'text-emerald-300'
-                        : 'text-zinc-300'
-                    }`}
-                  >
-                    {statusLabel}
-                  </span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="font-mono text-[10px] text-white/70">
-                    {formatTime(currentTime)}
-                  </span>
-                  <button
-                    onClick={() => setIsHudCollapsed(true)}
-                    className="text-white/40 hover:text-white p-0.5 rounded transition"
-                    title="Minimize HUD"
-                  >
-                    <Minimize2 size={12} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Control Buttons Row */}
-              <div className="flex items-center justify-between gap-1.5 pt-0.5">
-                {/* Scroll Speed Rate: Dheere Dheere vs Standard */}
-                <button
-                  type="button"
-                  onClick={toggleScrollSpeed}
-                  className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-2 py-1.5 text-[10px] font-mono transition active:scale-95 ${
-                    scrollSpeedMode === 'slow'
-                      ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300'
-                      : 'border-white/15 bg-white/10 text-white/80 hover:bg-white/20'
-                  }`}
-                  title="Toggle Scroll Animation Speed (Slow / Standard)"
-                >
-                  <Gauge size={11} className="text-emerald-400" />
-                  <span>{scrollSpeedMode === 'slow' ? 'Dheere (Slow)' : 'Standard'}</span>
-                </button>
-
-                {/* Atmosphere Darkness Toggle */}
-                <button
-                  type="button"
-                  onClick={cycleAtmosphere}
-                  className="flex items-center justify-center gap-1 rounded-lg border border-white/15 bg-white/10 px-2 py-1.5 text-[10px] font-mono text-white hover:bg-white/20 transition active:scale-95"
-                  title="Cycle Atmosphere Tone (Vivid / Studio / Stealth)"
-                >
-                  {atmosphere === 'vivid' ? (
-                    <>
-                      <Sun size={11} className="text-amber-300" />
-                      <span className="text-amber-300 font-bold">Vivid</span>
-                    </>
-                  ) : atmosphere === 'studio' ? (
-                    <>
-                      <Film size={11} className="text-emerald-300" />
-                      <span className="text-emerald-300 font-semibold">Studio</span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon size={11} className="text-indigo-300" />
-                      <span className="text-indigo-300 font-semibold">Stealth</span>
-                    </>
-                  )}
-                </button>
-
-                {/* Mode Toggle: Scroll Sync vs Auto Play */}
-                <button
-                  type="button"
-                  onClick={togglePlaybackMode}
-                  className={`flex items-center justify-center px-2 py-1.5 rounded-lg border text-[10px] font-mono transition active:scale-95 ${
-                    effectiveMode === 'scroll-sync'
-                      ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-300'
-                      : 'border-amber-400/40 bg-amber-500/20 text-amber-300'
-                  }`}
-                  title={
-                    effectiveMode === 'scroll-sync'
-                      ? 'Currently in Scroll-Sync Mode (only moves when you scroll)'
-                      : 'Currently in Continuous Auto-Play Mode'
-                  }
-                >
-                  {effectiveMode === 'scroll-sync' ? 'Scroll Sync' : 'Auto Play'}
-                </button>
-              </div>
-
-              {/* Progress Indicator Bar */}
-              <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mt-0.5">
-                <div
-                  className="bg-emerald-400 h-full transition-all duration-150"
-                  style={{
-                    width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%`,
-                  }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }
