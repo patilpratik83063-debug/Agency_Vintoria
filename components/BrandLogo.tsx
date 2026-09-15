@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-const LOGO_SRC = '/logo.png';
+const LOGO_SRC = '/logo.jpg';
 
 const SIZE_MAP = {
   xs: 'h-4 w-4 rounded-[4px]',
@@ -22,7 +22,7 @@ interface BrandLogoProps {
   bordered?: boolean;
 }
 
-/** Standalone Vintoria logo mark (logo.png) used consistently across the whole site. */
+/** Standalone Vintoria logo mark (logo.jpg) used consistently across the whole site. */
 export function BrandLogo({ size = 'md', className, bordered = true }: BrandLogoProps) {
   return (
     <span
@@ -34,7 +34,7 @@ export function BrandLogo({ size = 'md', className, bordered = true }: BrandLogo
       )}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={LOGO_SRC} alt="Vintoria" className="h-full w-full object-cover" loading="eager" />
+      <img src={LOGO_SRC} alt="Vintoria" className="h-full w-full object-cover" loading="eager" decoding="async" />
     </span>
   );
 }

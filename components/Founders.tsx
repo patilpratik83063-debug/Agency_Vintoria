@@ -9,7 +9,7 @@ export const FOUNDERS = [
     name: 'Abhishek Kogle',
     shortName: 'Abhishek',
     role: 'Founder',
-    image: '/founder.png',
+    image: '/founder.jpg',
     thumb: '/founder-thumb.jpg',
     whatsapp:
       'https://wa.me/918766033979?text=Hi%20Abhishek,%20I%20would%20like%20to%20discuss%20a%20project%20at%20Vintoria',
@@ -19,7 +19,7 @@ export const FOUNDERS = [
     name: 'Pratik Patil',
     shortName: 'Pratik',
     role: 'Co-Founder',
-    image: '/co-founder.png',
+    image: '/co-founder.jpg',
     thumb: '/co-founder-thumb.jpg',
     whatsapp:
       'https://wa.me/918766033979?text=Hi%20Pratik,%20I%20would%20like%20to%20discuss%20a%20project%20at%20Vintoria',

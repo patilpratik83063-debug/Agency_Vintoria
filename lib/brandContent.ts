@@ -40,7 +40,7 @@ export const BRAND = {
     {
       name: 'Abhishek Kogle',
       role: 'Founder',
-      image: '/founder.png',
+      image: '/founder.jpg',
       bio: 'Abhishek Kogle founded Vintoria in 2020 with the ambition of building a technology studio focused on creating meaningful digital products rather than simply delivering development projects. His role centers on the broader direction of Vintoria — shaping its product philosophy, technology vision and approach to building digital experiences.',
       socials: {
         linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',
@@ -51,7 +51,7 @@ export const BRAND = {
     {
       name: 'Pratik Patil (Kshirsagar)',
       role: 'Co-Founder',
-      image: '/co-founder.png',
+      image: '/co-founder.jpg',
       bio: "Pratik is Co-Founder of Vintoria, contributing to the company's direction and its approach to building digital products and technology solutions. Together with Abhishek, he helps shape Vintoria's evolution as a multidisciplinary digital product studio.",
       socials: {
         linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',

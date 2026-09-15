@@ -134,17 +134,19 @@ export function SectionHero({ onOpenConsultation }: SectionHeroProps) {
             <div className="flex -space-x-4 overflow-hidden py-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/founder.png"
+                src="/founder.jpg"
                 alt="Abhishek Kogle — Founder of Vintoria"
                 className="inline-block h-20 w-16 rounded-xl object-cover object-top ring-2 ring-black shadow-md border border-white/25"
                 loading="eager"
+                decoding="async"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/co-founder.png"
+                src="/co-founder.jpg"
                 alt="Pratik Patil — Co-Founder of Vintoria"
                 className="inline-block h-20 w-16 rounded-xl object-cover object-top ring-2 ring-black shadow-md border border-white/25"
                 loading="eager"
+                decoding="async"
               />
             </div>
 

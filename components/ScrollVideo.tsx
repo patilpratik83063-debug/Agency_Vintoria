@@ -3,15 +3,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Sun, Moon, Gauge, Minimize2, Maximize2, Film } from 'lucide-react';
 
-// Cloudinary CDN first (fast edge delivery + byte-range seeks for smooth
-// scroll-scrubbing), plain delivery as last-resort failover. Local
-// /hero_scrub.mp4 removed from the repo to keep deploys lean.
+// Cloudinary hero video. The poster is the video's own first frame, so the
+// poster -> video handoff is seamless (no "old image" flash). Desktop gets
+// full-HD; mobile (<768px) gets a ~4x lighter 960p eco variant.
 const CLOUDINARY_VIDEO_ID = 'b4107681-7a83-4a4b-a876-4231b80f84bd';
-const VIDEO_SOURCES = [
-  `https://res.cloudinary.com/urtnhoyc/video/upload/f_auto,q_auto:good,w_1920/${CLOUDINARY_VIDEO_ID}.mp4`,
-  `https://res.cloudinary.com/urtnhoyc/video/upload/${CLOUDINARY_VIDEO_ID}.mp4`,
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/urtnhoyc';
+export const HERO_POSTER_URL = `${CLOUDINARY_BASE}/video/upload/w_1280,q_auto:good,so_0/f_jpg/${CLOUDINARY_VIDEO_ID}.jpg`;
+const LOCAL_POSTER_FALLBACK = '/hero-poster.jpg';
+const DESKTOP_SOURCES = [
+  `${CLOUDINARY_BASE}/video/upload/f_auto,q_auto:good,w_1920/${CLOUDINARY_VIDEO_ID}.mp4`,
+  `${CLOUDINARY_BASE}/video/upload/${CLOUDINARY_VIDEO_ID}.mp4`,
 ];
-const LOCAL_POSTER_URL = '/hero-poster.jpg';
+const MOBILE_SOURCES = [
+  `${CLOUDINARY_BASE}/video/upload/f_auto,q_auto:eco,w_960/${CLOUDINARY_VIDEO_ID}.mp4`,
+  `${CLOUDINARY_BASE}/video/upload/f_auto,q_auto:good,w_1920/${CLOUDINARY_VIDEO_ID}.mp4`,
+];
+const MOBILE_BREAKPOINT = 768;
 
 export type AtmosphereLevel = 'vivid' | 'studio' | 'stealth';
 export type VideoPlaybackMode = 'scroll-sync' | 'cinema';
@@ -25,6 +32,9 @@ export function ScrollVideo() {
 
   const [isScrolling, setIsScrolling] = useState(false);
   const [sourceIndex, setSourceIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [posterUrl, setPosterUrl] = useState(HERO_POSTER_URL);
   const [loadStatus, setLoadStatus] = useState<LoadStatus>('loading');
   const [atmosphere, setAtmosphere] = useState<AtmosphereLevel>('vivid');
   const [playbackMode, setPlaybackMode] = useState<VideoPlaybackMode>('scroll-sync');
@@ -59,15 +69,27 @@ export function ScrollVideo() {
     statusRef.current = loadStatus;
   }, [loadStatus]);
 
-  const videoSource = VIDEO_SOURCES[sourceIndex];
+  // Detect mobile once mounted (SSR has no window). The <video> mounts only
+  // client-side so the server never fetches the wrong variant.
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener('change', apply);
+    setIsMounted(true);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
+
+  const SOURCES = isMobile ? MOBILE_SOURCES : DESKTOP_SOURCES;
+  const videoSource = SOURCES[Math.min(sourceIndex, SOURCES.length - 1)];
   // If scrubbing proved unworkable in this browser, cinema autoplay keeps the bg alive.
   const effectiveMode: VideoPlaybackMode = scrubStalled && !userOverrideRef.current ? 'cinema' : playbackMode;
 
   // Advance to next source on error; mark terminal error when exhausted.
   const handleVideoError = () => {
-    if (sourceIndex < VIDEO_SOURCES.length - 1) {
+    if (sourceIndex < SOURCES.length - 1) {
       console.warn(
-        `Background video failed to load (${VIDEO_SOURCES[sourceIndex]}), failing over to next source...`
+        `Background video failed to load (${SOURCES[sourceIndex]}), failing over to next source...`
       );
       primedRef.current = false;
       stallFramesRef.current = 0;
@@ -307,26 +329,33 @@ export function ScrollVideo() {
       className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]"
       aria-hidden="true"
     >
-      {/* Layer 1: Poster image — crossfades out once video is ready; slow Ken Burns
-          drift keeps the bg alive even if every video source fails. */}
+      {/* Layer 1: Poster is the video's own first frame — instant paint, then a
+          seamless crossfade when the video is ready. Falls back to the local
+          poster if Cloudinary is unreachable. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         id="scroll-video-poster"
-        src={LOCAL_POSTER_URL}
+        src={posterUrl}
+        onError={() => {
+          if (posterUrl !== LOCAL_POSTER_FALLBACK) setPosterUrl(LOCAL_POSTER_FALLBACK);
+        }}
         alt=""
+        fetchPriority="high"
+        decoding="async"
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
           showPosterFallback ? 'opacity-100 animate-scroll-poster-drift' : 'opacity-0'
         }`}
       />
 
-      {/* Layer 2: Main Hardware-Accelerated Video Element (scrubs on scroll, autoplays if scrub is blocked) */}
-      {loadStatus !== 'error' && (
+      {/* Layer 2: Main Hardware-Accelerated Video Element (scrubs on scroll, autoplays if scrub is blocked).
+          Mounts client-side only so mobile/desktop fetch the right variant. */}
+      {isMounted && loadStatus !== 'error' && (
         <video
           ref={videoRef}
           key={videoSource}
           id="scroll-video-element"
           src={videoSource}
-          poster={LOCAL_POSTER_URL}
+          poster={posterUrl}
           muted
           loop
           playsInline

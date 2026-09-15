@@ -62,7 +62,7 @@ const founders: FounderProfile[] = [
     name: 'Abhishek Kogle',
     role: 'Founder',
     tagline: 'Product Direction, Technology Vision & Digital Experience Strategy',
-    image: '/founder.png',
+    image: '/founder.jpg',
     thumb: '/founder-thumb.jpg',
     bio: 'Abhishek Kogle founded Vintoria in 2020 with the ambition of building a technology studio focused on creating meaningful digital products rather than simply delivering development projects. His role centers on the broader direction of Vintoria — shaping its product philosophy, technology vision and approach to building digital experiences.',
     quote:
@@ -85,7 +85,7 @@ const founders: FounderProfile[] = [
     name: 'Pratik Patil (Kshirsagar)',
     role: 'Co-Founder',
     tagline: 'Technical Solutions Architecture & Multidisciplinary Operations',
-    image: '/co-founder.png',
+    image: '/co-founder.jpg',
     thumb: '/co-founder-thumb.jpg',
     bio: "Pratik Patil is Co-Founder of Vintoria, contributing to the company's direction and its approach to building digital products and technology solutions. Together with Abhishek, he helps shape Vintoria's evolution as a multidisciplinary digital product studio.",
     quote:
