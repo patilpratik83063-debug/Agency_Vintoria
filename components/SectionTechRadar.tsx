@@ -58,21 +58,21 @@ export function SectionTechRadar() {
         {/* Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-black/60 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-xl shadow-md">
+            <div className="inline-flex items-center gap-2 rounded-lg border border-hairline-raised bg-overlay px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
               <BrandLogo size="xs" bordered={false} />
               <Zap size={13} className="text-emerald-400" />
               <span>Technology Section · Verified Production Stack</span>
             </div>
-            <h2 className="mt-4 text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-md">
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.06]">
               THE STACK BEHIND
               <br />
-              <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+              <span className="font-semibold bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                 THE EXPERIENCE.
               </span>
             </h2>
           </div>
 
-          <p className="max-w-md text-sm sm:text-base leading-relaxed text-zinc-200 md:text-right font-normal">
+          <p className="max-w-md text-base sm:text-lg leading-relaxed text-zinc-200 md:text-right font-normal">
             We use modern technologies to build products that are fast, reliable and ready to evolve. Only technologies we actually use and verify in high-traffic production.
           </p>
         </div>
@@ -83,31 +83,31 @@ export function SectionTechRadar() {
             const Icon = cat.icon;
             return (
               <Reveal key={cat.title} delay={100 + idx * 70}>
-                <div className="group flex h-full flex-col justify-between rounded-2xl border border-white/20 bg-black/55 p-6 backdrop-blur-xl transition-all duration-300 hover:border-white/40 hover:bg-black/65 shadow-xl">
+                <div className="group flex h-full flex-col justify-between rounded-2xl border border-hairline bg-overlay p-6 backdrop-blur-xl transition-colors duration-300 hover:border-hairline-bright hover:bg-black/80 shadow-glass">
                   <div>
-                    <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                    <div className="flex items-center justify-between border-b border-hairline pb-4">
                       <div className="flex items-center gap-3">
-                        <div className="rounded-lg border border-white/20 bg-white/10 p-2 text-white">
+                        <div className="rounded-lg border border-hairline-raised bg-white/10 p-2 text-white">
                           <Icon size={18} />
                         </div>
                         <h3 className="text-xl font-bold text-white">{cat.title}</h3>
                       </div>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-bold">
+                      <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-bold">
                         0{idx + 1}
                       </span>
                     </div>
 
-                    <p className="mt-4 text-xs leading-relaxed text-zinc-200">
+                    <p className="mt-4 text-sm leading-relaxed text-zinc-200">
                       {cat.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/10">
+                  <div className="mt-6 pt-4 border-t border-hairline">
                     <div className="flex flex-wrap gap-2">
                       {cat.items.map((tech) => (
                         <span
                           key={tech}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/10 px-3 py-1 font-mono text-xs font-semibold text-white group-hover:border-emerald-400/40 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-hairline-raised bg-white/10 px-3 py-1 font-mono text-sm font-semibold text-white group-hover:border-emerald-400/40 transition-colors"
                         >
                           <Check size={12} className="text-emerald-400" />
                           <span>{tech}</span>

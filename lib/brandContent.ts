@@ -1,3 +1,80 @@
+export interface FounderProfile {
+  id: string;
+  name: string;
+  shortName: string;
+  role: string;
+  tagline: string;
+  image: string;
+  thumb: string;
+  bio: string;
+  quote: string;
+  focusAreas: string[];
+  techDisciplines: string[];
+  socials: {
+    linkedin: string;
+    twitter: string;
+    whatsapp: string;
+  };
+}
+
+/**
+ * Single source of truth for founder data. This object was previously
+ * triplicated across brandContent.ts, Founders.tsx and about/page.tsx.
+ * NOTE: Abhishek's own LinkedIn profile URL is not yet known — until he
+ * supplies one, his card links to the studio LinkedIn instead of a
+ * wrong person's profile.
+ */
+export const FOUNDER_PROFILES: FounderProfile[] = [
+  {
+    id: 'abhishek-kogle',
+    name: 'Abhishek Kogle',
+    shortName: 'Abhishek',
+    role: 'Founder',
+    tagline: 'Product Direction, Technology Vision & Digital Experience Strategy',
+    image: '/founder.jpg',
+    thumb: '/founder-thumb.jpg',
+    bio: 'Abhishek Kogle founded Vintoria in 2020 with the ambition of building a technology studio focused on creating meaningful digital products rather than simply delivering development projects. His role centers on the broader direction of Vintoria — shaping its product philosophy, technology vision and approach to building digital experiences.',
+    quote:
+      'Strategy without execution is just talk. Design without engineering is just decoration. Engineering without strategy is just code. Vintoria exists to connect these layers — helping ambitious businesses design, build and scale digital products that actually make an impact.',
+    focusAreas: [
+      'Studio Direction & Product Philosophy',
+      'Technology Stack Evaluation & Feasibility',
+      'Enterprise Architecture & Scalability',
+      'High-Impact Digital Growth Systems',
+    ],
+    techDisciplines: ['Product Strategy', 'Full-Stack Architecture', 'AI & Automation Systems', 'Next.js', 'Cloud Run'],
+    socials: {
+      linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',
+      twitter: 'https://x.com/VintoriaAI',
+      whatsapp: 'https://wa.me/918766033979?text=Hi%20Abhishek,%20I%20would%20like%20to%20discuss%20a%20project%20at%20Vintoria',
+    },
+  },
+  {
+    id: 'pratik-patil',
+    name: 'Pratik Patil (Kshirsagar)',
+    shortName: 'Pratik',
+    role: 'Co-Founder',
+    tagline: 'Technical Solutions Architecture & Multidisciplinary Operations',
+    image: '/co-founder.jpg',
+    thumb: '/co-founder-thumb.jpg',
+    bio: "Pratik Patil is Co-Founder of Vintoria, contributing to the company's direction and its approach to building digital products and technology solutions. Together with Abhishek, he helps shape Vintoria's evolution as a multidisciplinary digital product studio.",
+    quote:
+      'Software shouldn\u2019t add complexity simply because complexity is possible. It should make something faster, clearer, more useful, more scalable or more valuable. That\u2019s the standard we bring to every Vintoria project.',
+    focusAreas: [
+      'Digital Product & Technology Solutions',
+      'Multidisciplinary Studio Operations',
+      'Client Implementation & Systems Quality',
+      'AI Automation Workflows & Scalable Infrastructure',
+    ],
+    techDisciplines: ['Solutions Architecture', 'Systems Engineering', 'Distributed Workflows', 'TypeScript', 'PostgreSQL'],
+    socials: {
+      linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',
+      twitter: 'https://x.com/VintoriaAI',
+      whatsapp: 'https://wa.me/918766033979?text=Hi%20Pratik,%20I%20would%20like%20to%20discuss%20a%20project%20at%20Vintoria',
+    },
+  },
+];
+
 export const SOCIAL_LINKS = {
   youtube: {
     name: 'YouTube',
@@ -36,30 +113,7 @@ export const BRAND = {
   name: 'VINTORIA®',
   category: 'Digital Product Studio',
   founded: 2020,
-  founders: [
-    {
-      name: 'Abhishek Kogle',
-      role: 'Founder',
-      image: '/founder.jpg',
-      bio: 'Abhishek Kogle founded Vintoria in 2020 with the ambition of building a technology studio focused on creating meaningful digital products rather than simply delivering development projects. His role centers on the broader direction of Vintoria — shaping its product philosophy, technology vision and approach to building digital experiences.',
-      socials: {
-        linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',
-        twitter: 'https://x.com/VintoriaAI',
-        whatsapp: 'https://wa.me/918766033979?text=Hi%20Abhishek,%20let%27s%20discuss%20a%20project%20at%20Vintoria',
-      },
-    },
-    {
-      name: 'Pratik Patil (Kshirsagar)',
-      role: 'Co-Founder',
-      image: '/co-founder.jpg',
-      bio: "Pratik is Co-Founder of Vintoria, contributing to the company's direction and its approach to building digital products and technology solutions. Together with Abhishek, he helps shape Vintoria's evolution as a multidisciplinary digital product studio.",
-      socials: {
-        linkedin: 'https://www.linkedin.com/in/pratik-kshirsagar-9a344739b/',
-        twitter: 'https://x.com/VintoriaAI',
-        whatsapp: 'https://wa.me/918766033979?text=Hi%20Pratik,%20let%27s%20discuss%20a%20project%20at%20Vintoria',
-      },
-    },
-  ],
+  founders: FOUNDER_PROFILES,
   coreStatement: 'Digital products, engineered for growth.',
   primaryLine: "Build What's Next.",
   shortDescription:

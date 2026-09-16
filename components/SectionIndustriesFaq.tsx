@@ -25,22 +25,22 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
         <div>
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-black/60 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-xl shadow-md">
+              <div className="inline-flex items-center gap-2 rounded-lg border border-hairline-raised bg-overlay px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
                 <BrandLogo size="xs" bordered={false} />
                 <Building2 size={13} className="text-emerald-400" />
                 <span>Cross-Sector Architecture · 15 Key Verticals</span>
               </div>
 
-              <h2 className="mt-4 text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-md">
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.06]">
                 BUILT ACROSS
                 <br />
-                <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+                <span className="font-semibold bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                   INDUSTRIES.
                 </span>
               </h2>
             </div>
 
-            <p className="max-w-md text-sm sm:text-base leading-relaxed text-zinc-200 md:text-right font-normal">
+            <p className="max-w-md text-base sm:text-lg leading-relaxed text-zinc-200 md:text-right font-normal">
               Different industries have different problems. Our approach remains the same: understand the system, identify the opportunity and build the right digital solution.
             </p>
           </div>
@@ -52,9 +52,9 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
                 <button
                   type="button"
                   onClick={() => onOpenConsultation(`Inquiry for ${ind} platform architecture`)}
-                  className="group flex w-full items-center justify-between rounded-2xl border border-white/15 bg-black/55 p-4 text-left backdrop-blur-xl transition-all duration-300 hover:border-emerald-400/50 hover:bg-white/15 hover:-translate-y-0.5 shadow-md"
+                  className="group flex w-full items-center justify-between rounded-2xl border border-hairline bg-overlay p-4 text-left backdrop-blur-xl transition-colors duration-300 hover:border-emerald-400/50 hover:bg-white/10 shadow-glass"
                 >
-                  <span className="text-xs font-bold text-white group-hover:text-emerald-300">
+                  <span className="text-sm font-semibold text-white group-hover:text-emerald-300">
                     {ind}
                   </span>
                   <ArrowRight
@@ -73,7 +73,7 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
             {/* Left Column: FAQ Header */}
             <div className="lg:col-span-5">
               <Reveal delay={100}>
-                <div className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-black/60 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-xl shadow-md">
+                <div className="inline-flex items-center gap-2 rounded-lg border border-hairline-raised bg-overlay px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
                   <BrandLogo size="xs" bordered={false} />
                   <HelpCircle size={13} className="text-emerald-400" />
                   <span>Frequently Answered Inquiries</span>
@@ -89,7 +89,7 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
                   Transparent perspectives on our engagement models, technical stack, AI integrations, and ongoing engineering support.
                 </p>
 
-                <div className="mt-6 rounded-2xl border border-white/15 bg-black/55 p-5 backdrop-blur-xl">
+                <div className="mt-6 rounded-2xl border border-hairline-raised bg-overlay p-5 backdrop-blur-xl">
                   <div className="flex items-center gap-3">
                     <FounderAvatars size="sm" />
                     <div className="text-xs font-semibold text-white">Have a custom question?</div>
@@ -114,10 +114,10 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
                 return (
                   <Reveal key={item.q} delay={100 + idx * 50}>
                     <div
-                      className={`overflow-hidden rounded-2xl border transition-all duration-300 shadow-md ${
+                      className={`overflow-hidden rounded-2xl border transition-colors duration-300 shadow-glass ${
                         isOpen
-                          ? 'border-white/40 bg-black/75 backdrop-blur-2xl'
-                          : 'border-white/15 bg-black/50 backdrop-blur-xl hover:border-white/30'
+                          ? 'border-hairline-bright bg-overlay-strong backdrop-blur-2xl'
+                          : 'border-hairline bg-overlay-soft backdrop-blur-xl hover:border-hairline-raised'
                       }`}
                     >
                       <button
@@ -135,7 +135,7 @@ export function SectionIndustriesFaq({ onOpenConsultation }: SectionIndustriesFa
                       </button>
 
                       {isOpen && (
-                        <div className="px-5 pb-5 pt-1 text-xs sm:text-sm leading-relaxed text-zinc-200 border-t border-white/10 animate-in fade-in duration-200">
+                        <div className="px-5 pb-5 pt-1 text-sm leading-relaxed text-zinc-200 border-t border-hairline animate-in fade-in duration-200">
                           {item.a}
                         </div>
                       )}

@@ -4,6 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { Reveal } from './Reveal';
+import { Button } from './ui/Button';
+import { GlassCard } from './ui/GlassCard';
 
 interface ChapterHighlight {
   value: string;
@@ -100,43 +102,42 @@ export function ScrollChapters() {
           className="pointer-events-none relative flex min-h-[130vh] flex-col items-center justify-center px-6 text-center"
         >
           <Reveal delay={80} direction={i % 2 === 0 ? 'up' : 'scale'}>
-            <div className="font-mono text-xs uppercase tracking-[0.3em] text-emerald-400 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+            <div className="font-mono text-xs uppercase tracking-[0.3em] text-emerald-300">
               {chapter.index} · {chapter.eyebrow}
             </div>
           </Reveal>
           <Reveal delay={200}>
-            <h2 className="mt-5 max-w-4xl text-4xl font-light leading-tight tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] sm:text-6xl">
+            <h2 className="mt-5 max-w-4xl text-4xl font-light leading-[1.1] tracking-tight text-white sm:text-6xl">
               {chapter.line}
             </h2>
           </Reveal>
           <Reveal delay={280}>
-            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-zinc-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:text-base">
+            <p className="mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-100">
               {chapter.body}
             </p>
           </Reveal>
           <Reveal delay={340}>
-            <div className="mt-7 flex items-stretch justify-center gap-3 sm:gap-4">
+            <div className="mt-9 flex flex-wrap items-stretch justify-center gap-3 sm:gap-4">
               {chapter.highlights.map((highlight) => (
-                <div
-                  key={highlight.label}
-                  className="min-w-[92px] rounded-2xl border border-white/20 bg-black/55 px-4 py-3 backdrop-blur-xl sm:min-w-[120px]"
-                >
-                  <div className="text-lg font-bold text-white sm:text-xl">{highlight.value}</div>
-                  <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-emerald-300">
+                <GlassCard key={highlight.label} surface="standard" className="min-w-[110px] px-5 py-4">
+                  <div className="text-xl font-bold text-white sm:text-2xl">{highlight.value}</div>
+                  <div className="mt-1 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300">
                     {highlight.label}
                   </div>
-                </div>
+                </GlassCard>
               ))}
             </div>
           </Reveal>
           <Reveal delay={400}>
-            <Link
+            <Button
               href={chapter.href}
-              className="pointer-events-auto mt-7 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-black/55 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur-xl transition hover:border-white/60 hover:bg-white/15 active:scale-95"
+              variant="secondary"
+              size="md"
+              className="pointer-events-auto mt-9"
             >
               <span>{chapter.cta}</span>
-              <ArrowUpRight size={14} />
-            </Link>
+              <ArrowUpRight size={15} />
+            </Button>
           </Reveal>
         </section>
       ))}
@@ -144,38 +145,35 @@ export function ScrollChapters() {
       {/* Finale — hands off to the contact page */}
       <section className="pointer-events-none relative flex min-h-[110vh] flex-col items-center justify-center px-6 text-center">
         <Reveal direction="scale">
-          <div className="font-mono text-xs uppercase tracking-[0.3em] text-emerald-400 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          <div className="font-mono text-xs uppercase tracking-[0.3em] text-emerald-300">
             06 · Begin
           </div>
         </Reveal>
         <Reveal delay={200}>
-          <h2 className="mt-5 max-w-4xl text-5xl font-normal leading-tight tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.98)] sm:text-7xl">
+          <h2 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-7xl">
             BUILD WHAT&apos;S NEXT.
           </h2>
         </Reveal>
         <Reveal delay={280}>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-zinc-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] sm:text-base">
+          <p className="mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-zinc-100">
             Tell us where you want to go — a founder replies personally within 24 hours with
             first thoughts on architecture, scope and timeline. No sales layers, no waiting queues.
           </p>
         </Reveal>
         <Reveal delay={360}>
-          <div className="mt-6 flex items-center justify-center gap-5 font-mono text-[11px] uppercase tracking-[0.16em] text-white/70">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-[0.16em] text-white/75">
             <span>24h founder reply</span>
-            <span className="h-1 w-1 rounded-full bg-emerald-400" />
+            <span className="h-1 w-1 rounded-full bg-emerald-400" aria-hidden="true" />
             <span>Free discovery call</span>
-            <span className="h-1 w-1 rounded-full bg-emerald-400" />
+            <span className="h-1 w-1 rounded-full bg-emerald-400" aria-hidden="true" />
             <span>NDA on request</span>
           </div>
         </Reveal>
         <Reveal delay={420}>
-          <Link
-            href="/contact"
-            className="pointer-events-auto mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-black shadow-xl transition hover:bg-white/90 active:scale-95"
-          >
+          <Button href="/contact" size="lg" className="pointer-events-auto mt-9">
             <span>Start a Project</span>
-            <ArrowUpRight size={15} />
-          </Link>
+            <ArrowUpRight size={16} />
+          </Button>
         </Reveal>
       </section>
     </div>

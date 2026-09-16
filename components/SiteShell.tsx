@@ -20,9 +20,13 @@ interface SiteShellProps {
 export function SiteShell({ children }: SiteShellProps) {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [consultationBrief, setConsultationBrief] = useState('');
+  // Remount key: increments on every open so the modal re-initializes its
+  // form with the freshly prefilled brief (state would otherwise persist).
+  const [consultationNonce, setConsultationNonce] = useState(0);
 
   const handleOpenConsultation = (initialBrief: string = '') => {
     setConsultationBrief(initialBrief);
+    setConsultationNonce((n) => n + 1);
     setIsConsultationOpen(true);
   };
 
@@ -48,8 +52,10 @@ export function SiteShell({ children }: SiteShellProps) {
         <Footer />
       </div>
 
-      {/* Global Consultation Booking & RFP Modal */}
+      {/* Global Consultation Booking & RFP Modal (key forces remount so a
+          reopened modal shows the new prefilled brief, not stale state) */}
       <ConsultationModal
+        key={consultationNonce}
         isOpen={isConsultationOpen}
         onClose={() => setIsConsultationOpen(false)}
         initialMessage={consultationBrief}

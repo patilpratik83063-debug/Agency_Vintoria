@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import {Inter} from 'next/font/google';
+import {Inter, JetBrains_Mono, Instrument_Serif} from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({
@@ -7,6 +7,21 @@ const inter = Inter({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-jetbrains-mono',
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-instrument-serif',
 });
 
 function resolveSiteUrl(): string {
@@ -47,7 +62,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable}`}>
       {/* Early CDN handshake + hero poster preload (must match HERO_POSTER_URL in ScrollVideo) */}
       <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
       <link rel="dns-prefetch" href="https://res.cloudinary.com" />
@@ -57,7 +72,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         href="https://res.cloudinary.com/urtnhoyc/video/upload/w_1280,q_auto:good,so_0/f_jpg/b4107681-7a83-4a4b-a876-4231b80f84bd.jpg"
         fetchPriority="high"
       />
-      <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased`} suppressHydrationWarning>
+      <body className="bg-base text-white antialiased" suppressHydrationWarning>
         {children}
       </body>
     </html>

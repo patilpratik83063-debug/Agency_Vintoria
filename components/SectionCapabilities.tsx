@@ -22,6 +22,9 @@ import {
 } from 'lucide-react';
 import { Reveal } from './Reveal';
 import { BrandLogo } from './BrandLogo';
+import { Button } from './ui/Button';
+import { Input } from './ui/Field';
+import { GlassCard } from './ui/GlassCard';
 import { SERVICE_CATALOG, ServiceCategory, TOTAL_SKILLS_COUNT } from '@/lib/serviceCatalog';
 
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -77,22 +80,22 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
         {/* Section Header: THE GATE OF CAPABILITIES */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-black/60 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-xl shadow-md">
+            <div className="inline-flex items-center gap-2 rounded-lg border border-hairline-raised bg-overlay px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
               <BrandLogo size="xs" bordered={false} />
               <span>Complete Service Catalog · {TOTAL_SKILLS_COUNT} Capabilities</span>
             </div>
 
-            <h2 className="mt-4 text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-md">
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.06]">
               THE GATE OF
               <br />
-              <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                 CAPABILITIES.
               </span>
             </h2>
           </div>
 
           <div className="max-w-md md:text-right">
-            <p className="text-sm sm:text-base leading-relaxed text-zinc-200 font-normal">
+            <p className="text-base sm:text-lg leading-relaxed text-zinc-200 font-normal">
               Behind every Vintoria project is a multidisciplinary system of strategy, design and technology. Explore the capabilities that allow us to take an idea from its earliest stage to a product ready for the real world.
             </p>
             <button
@@ -108,13 +111,14 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
         {/* Global Live Search Bar */}
         <div className="mt-10">
           <div className="relative flex items-center">
-            <Search className="absolute left-4 h-4 w-4 text-zinc-400" />
-            <input
+            <Search className="pointer-events-none absolute left-4 h-4 w-4 text-zinc-400" />
+            <Input
               type="text"
+              aria-label="Search capabilities"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search across all 230+ capabilities (e.g. 'Next.js', 'RAG Systems', 'SaaS MVP', 'Automation', 'Shopify', 'SEO')..."
-              className="w-full rounded-2xl border border-white/20 bg-black/60 py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-zinc-400 backdrop-blur-xl focus:border-white focus:outline-none shadow-lg transition-all"
+              className="rounded-2xl py-4 pl-11 pr-14"
             />
             {searchQuery && (
               <button
@@ -146,28 +150,25 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
               {searchResults.map(({ category, matchedSkills }) => {
                 const Icon = ICON_MAP[category.iconName] || Layers;
                 return (
-                  <div
-                    key={category.id}
-                    className="rounded-2xl border border-white/20 bg-black/55 p-6 backdrop-blur-xl shadow-xl"
-                  >
-                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <GlassCard key={category.id} surface="soft" className="p-6">
+                    <div className="flex items-center justify-between border-b border-hairline pb-3">
                       <div className="flex items-center gap-3">
-                        <div className="rounded-lg border border-white/15 bg-white/10 p-2 text-white">
+                        <div className="rounded-lg border border-hairline-raised bg-white/10 p-2 text-white">
                           <Icon size={18} />
                         </div>
                         <div>
-                          <div className="font-mono text-[10px] text-emerald-400 font-bold">
+                          <div className="font-mono text-xs text-emerald-400 font-bold">
                             {category.number} · {category.tagline}
                           </div>
                           <div className="text-lg font-bold text-white">{category.title}</div>
                         </div>
                       </div>
-                      <button
+                      <Button
+                        size="sm"
                         onClick={() => onOpenConsultation(`Consultation for ${category.title}`)}
-                        className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-black hover:bg-white/85"
                       >
                         Select
-                      </button>
+                      </Button>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-1.5">
@@ -175,14 +176,14 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                         <button
                           key={skill}
                           onClick={() => onOpenConsultation(`Inquiry for ${skill} under ${category.title}`)}
-                          className="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1 text-xs text-zinc-200 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-white transition-all text-left flex items-center gap-1.5"
+                          className="rounded-lg border border-hairline-raised bg-white/5 px-2.5 py-1 text-sm text-zinc-200 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-white transition-colors duration-300 text-left flex items-center gap-1.5"
                         >
-                          <CheckCircle2 size={11} className="text-emerald-400 shrink-0" />
+                          <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
                           <span>{skill}</span>
                         </button>
                       ))}
                     </div>
-                  </div>
+                  </GlassCard>
                 );
               })}
             </div>
@@ -191,7 +192,7 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
           /* Normal State: Interactive 12-Pillar Tabs & Detailed View */
           <div className="mt-10">
             {/* 12 Category Filter Chips */}
-            <div className="flex flex-wrap gap-2 border-b border-white/15 pb-4">
+            <div className="flex flex-wrap gap-2 border-b border-hairline-raised pb-4">
               {SERVICE_CATALOG.map((cat, idx) => {
                 const isActive = activeCategoryIndex === idx;
                 const Icon = ICON_MAP[cat.iconName] || Layers;
@@ -199,10 +200,11 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategoryIndex(idx)}
-                    className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all ${
+                    aria-pressed={isActive}
+                    className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition-colors duration-300 ${
                       isActive
-                        ? 'bg-white text-black shadow-lg scale-[1.02]'
-                        : 'border border-white/20 bg-black/55 text-white/80 hover:border-white/40 hover:text-white backdrop-blur-md'
+                        ? 'bg-white text-black shadow-glass'
+                        : 'border border-hairline-raised bg-overlay text-white/80 hover:border-hairline-bright hover:text-white backdrop-blur-xl'
                     }`}
                   >
                     <Icon size={14} className={isActive ? 'text-black' : 'text-zinc-400'} />
@@ -210,7 +212,7 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                       {cat.number} {cat.title}
                     </span>
                     <span
-                      className={`rounded-full px-1.5 py-0.2 text-[9px] font-mono ${
+                      className={`rounded-full px-1.5 py-0.5 text-xs font-mono ${
                         isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-zinc-300'
                       }`}
                     >
@@ -222,11 +224,11 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
             </div>
 
             {/* Active Pillar Highlight Card */}
-            <div className="mt-6 rounded-3xl border border-white/20 bg-black/60 p-6 backdrop-blur-xl shadow-2xl sm:p-10">
+            <GlassCard surface="standard" className="mt-6 p-6 sm:p-10">
               <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
                 <div>
                   <div className="flex items-center gap-2 font-mono text-xs">
-                    <span className="rounded-md border border-emerald-400/40 bg-emerald-500/15 px-2.5 py-0.5 font-bold text-emerald-400">
+                    <span className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-0.5 font-bold text-emerald-300">
                       DISCIPLINE {activeCategory.number}
                     </span>
                     <span className="text-zinc-400">•</span>
@@ -239,29 +241,28 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                     {activeCategory.title}
                   </h3>
 
-                  <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-200">
+                  <p className="mt-3 max-w-2xl text-base sm:text-lg leading-relaxed text-zinc-200">
                     {activeCategory.description}
                   </p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <button
+                  <Button
                     onClick={() => onOpenConsultation(`Complete brief for ${activeCategory.title}`)}
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-xs font-bold text-black transition hover:bg-white/90 shadow-lg active:scale-95"
                   >
                     <span>Request Proposal for {activeCategory.number}</span>
                     <ArrowRight size={14} />
-                  </button>
+                  </Button>
                 </div>
               </div>
 
               {/* Skills Grid */}
-              <div className="mt-8 border-t border-white/15 pt-6">
+              <div className="mt-8 border-t border-hairline-raised pt-6">
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold">
+                  <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold">
                     Specialized Competencies ({activeCategory.skills.length} Available)
                   </span>
-                  <span className="text-xs text-zinc-400">Click any capability to add to your brief</span>
+                  <span className="text-sm text-zinc-400">Click any capability to add to your brief</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -269,14 +270,14 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                     <button
                       key={skill}
                       onClick={() => onOpenConsultation(`Inquiry for ${skill} (${activeCategory.title})`)}
-                      className="group flex items-center justify-between rounded-xl border border-white/15 bg-white/5 p-3 text-left transition-all duration-200 hover:border-emerald-400/50 hover:bg-white/15 hover:shadow-md"
+                      className="group flex items-center justify-between rounded-xl border border-hairline bg-white/5 p-3 text-left transition-colors duration-300 hover:border-emerald-400/50 hover:bg-white/10"
                     >
                       <div className="flex items-center gap-2.5">
                         <CheckCircle2
                           size={14}
                           className="text-emerald-400 shrink-0 group-hover:scale-110 transition-transform"
                         />
-                        <span className="text-xs font-semibold text-zinc-100 group-hover:text-white">
+                        <span className="text-sm font-medium text-zinc-100 group-hover:text-white">
                           {skill}
                         </span>
                       </div>
@@ -288,13 +289,14 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                   ))}
                 </div>
               </div>
-            </div>
+            </GlassCard>
 
             {/* Toggle to View Entire 12-Discipline Matrix */}
             <div className="mt-10 text-center">
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => setIsAllExpanded(!isAllExpanded)}
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/60 px-6 py-2.5 font-mono text-xs font-semibold text-white backdrop-blur-xl hover:border-white/50 hover:bg-white/15 transition-all"
+                aria-expanded={isAllExpanded}
               >
                 <SlidersHorizontal size={13} />
                 <span>
@@ -304,7 +306,7 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                   size={14}
                   className={`transition-transform duration-300 ${isAllExpanded ? 'rotate-180' : ''}`}
                 />
-              </button>
+              </Button>
             </div>
 
             {/* Expanded 12-Pillar Matrix */}
@@ -313,55 +315,52 @@ export function SectionCapabilities({ onOpenConsultation }: SectionCapabilitiesP
                 {SERVICE_CATALOG.map((cat) => {
                   const Icon = ICON_MAP[cat.iconName] || Layers;
                   return (
-                    <div
-                      key={cat.id}
-                      className="flex flex-col justify-between rounded-2xl border border-white/20 bg-black/55 p-5 backdrop-blur-xl shadow-xl"
-                    >
+                    <GlassCard key={cat.id} surface="soft" className="flex flex-col justify-between p-5">
                       <div>
-                        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                        <div className="flex items-center justify-between border-b border-hairline pb-3">
                           <div className="flex items-center gap-2.5">
-                            <div className="rounded-lg border border-white/15 bg-white/10 p-1.5 text-white">
+                            <div className="rounded-lg border border-hairline-raised bg-white/10 p-1.5 text-white">
                               <Icon size={16} />
                             </div>
                             <div>
-                              <span className="font-mono text-[10px] text-emerald-400 font-bold">
+                              <span className="font-mono text-xs text-emerald-300 font-bold">
                                 {cat.number}
                               </span>
                               <h4 className="text-sm font-bold text-white">{cat.title}</h4>
                             </div>
                           </div>
-                          <span className="font-mono text-[10px] text-zinc-400">
+                          <span className="font-mono text-xs text-zinc-400">
                             {cat.skills.length} skills
                           </span>
                         </div>
 
-                        <p className="mt-2 text-xs text-zinc-300 leading-snug">
+                        <p className="mt-2 text-sm text-zinc-300 leading-snug">
                           {cat.description}
                         </p>
 
                         <div className="mt-3 space-y-1">
                           {cat.skills.map((skill) => (
-                            <div
+                            <button
                               key={skill}
                               onClick={() => onOpenConsultation(`Request for ${skill} (${cat.title})`)}
-                              className="cursor-pointer rounded px-2 py-1 text-[11px] text-zinc-200 hover:bg-white/10 hover:text-white flex items-center gap-1.5 transition-colors"
+                              className="w-full rounded px-2 py-1 text-left text-sm text-zinc-200 hover:bg-white/10 hover:text-white flex items-center gap-1.5 transition-colors"
                             >
                               <span className="h-1 w-1 rounded-full bg-emerald-400 shrink-0" />
                               <span className="truncate">{skill}</span>
-                            </div>
+                            </button>
                           ))}
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-white/10">
+                      <div className="mt-4 pt-3 border-t border-hairline">
                         <button
                           onClick={() => onOpenConsultation(`Initiate project for ${cat.title}`)}
-                          className="w-full rounded-lg bg-white/10 py-1.5 text-center font-mono text-[11px] font-bold text-white hover:bg-white hover:text-black transition-colors"
+                          className="w-full rounded-lg bg-white/10 py-1.5 text-center font-mono text-xs font-bold text-white hover:bg-white hover:text-black transition-colors duration-300"
                         >
-                          Select Discipline {cat.number} →
+                          Select Discipline {cat.number} &rarr;
                         </button>
                       </div>
-                    </div>
+                    </GlassCard>
                   );
                 })}
               </div>

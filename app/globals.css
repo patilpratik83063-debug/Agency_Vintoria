@@ -1,8 +1,56 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Inter", monospace, sans-serif;
+  /* ── Typography ───────────────────────────────────────────────
+     Inter for UI/body, JetBrains Mono for the engineering voice
+     (eyebrows, chips, estimator output), Instrument Serif for the
+     editorial accent (founder quotes). */
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+
+  /* ── Surfaces (opaque anchors) ──────────────────────────────
+     Base → card → elevated. Replaces the ad-hoc #0a0a0a /
+     #0f0f11 / #111114 / #161619 quartet. */
+  --color-base: #0a0a0a;
+  --color-surface: #101013;
+  --color-elevated: #17171b;
+
+  /* ── Glass overlays over the video backdrop ─────────────────
+     Exactly three steps: soft panels, standard cards, heavy modals. */
+  --color-overlay-soft: rgb(0 0 0 / 0.55);
+  --color-overlay: rgb(0 0 0 / 0.72);
+  --color-overlay-strong: rgb(0 0 0 / 0.88);
+
+  /* ── Hairlines ──────────────────────────────────────────────
+     Subtle / raised / interactive. Replaces nine border alphas. */
+  --color-hairline: rgb(255 255 255 / 0.08);
+  --color-hairline-raised: rgb(255 255 255 / 0.16);
+  --color-hairline-bright: rgb(255 255 255 / 0.4);
+
+  /* ── Accent ─────────────────────────────────────────────────── */
+  --color-accent: var(--color-emerald-400);
+
+  /* ── Motion ─────────────────────────────────────────────────── */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Shadows ────────────────────────────────────────────────── */
+  --shadow-glass: 0 8px 32px rgb(0 0 0 / 0.35);
+  --shadow-glass-lg: 0 24px 64px rgb(0 0 0 / 0.5);
+}
+
+html {
+  background-color: var(--color-base);
+  color: #ffffff;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
@@ -10,13 +58,12 @@
   color: #ffffff;
 }
 
-html, body {
-  background-color: #0a0a0a;
-  color: #ffffff;
-  font-family: 'Inter', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+/* Visible keyboard focus everywhere — a white ring that reads on
+   dark glass and over the video backdrop. */
+:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.9);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Slow Ken Burns drift for the scroll-video poster fallback so the
@@ -39,7 +86,22 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .animate-scroll-poster-drift {
     animation: none;
+  }
+  /* Reveal (scroll-in transitions) becomes a plain fade of opacity only. */
+  .reveal-motion {
+    transition-property: opacity !important;
+    transform: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

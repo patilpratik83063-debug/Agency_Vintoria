@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -72,11 +73,16 @@ export function Reveal({
       style={{
         transitionDuration: `${duration}ms`,
         transitionDelay: `${delay}ms`,
-        transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        transitionTimingFunction: 'var(--ease-smooth)',
+        // Compositing hint only while the element still has to animate;
+        // promoting every revealed element permanently wastes layers.
+        willChange: isVisible ? undefined : 'transform, opacity',
       }}
-      className={`transform transition-all will-change-[transform,opacity] ${
-        isVisible ? getActiveTransform() : getInitialTransform()
-      } ${className}`}
+      className={cn(
+        'reveal-motion transform transition-[transform,opacity]',
+        isVisible ? getActiveTransform() : getInitialTransform(),
+        className
+      )}
     >
       {children}
     </div>

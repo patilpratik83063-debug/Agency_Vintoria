@@ -4,6 +4,7 @@ import React from 'react';
 import { Bot, Zap, ArrowRight, Cpu, Workflow, MessageSquareCode, FileSearch, Sparkles, ShieldCheck } from 'lucide-react';
 import { Reveal } from './Reveal';
 import { BrandLogo } from './BrandLogo';
+import { Button } from './ui/Button';
 
 interface SectionAiAutomationProps {
   onOpenConsultation: (brief?: string) => void;
@@ -16,9 +17,9 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* 17. AI Section */}
           <Reveal delay={100}>
-            <div className="flex h-full flex-col justify-between rounded-3xl border border-white/20 bg-black/55 p-7 backdrop-blur-xl shadow-2xl sm:p-10">
+            <div className="flex h-full flex-col justify-between rounded-3xl border border-hairline-raised bg-overlay p-7 backdrop-blur-xl shadow-glass-lg sm:p-10">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-emerald-400 font-semibold">
+                <div className="inline-flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
                   <BrandLogo size="xs" bordered={false} />
                   <Bot size={13} />
                   <span>07 — AI Development</span>
@@ -27,7 +28,7 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                 <h3 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   INTELLIGENCE,
                   <br />
-                  <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+                  <span className="font-semibold bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                     BUILT INTO THE PRODUCT.
                   </span>
                 </h3>
@@ -48,7 +49,7 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                   ].map((feat) => (
                     <div
                       key={feat}
-                      className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 p-2.5 text-zinc-200 text-[11px]"
+                      className="flex items-center gap-2 rounded-lg border border-hairline bg-white/5 p-2.5 text-zinc-200 text-sm"
                     >
                       <Sparkles size={12} className="text-emerald-400 shrink-0" />
                       <span>{feat}</span>
@@ -57,23 +58,20 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/15">
-                <button
-                  onClick={() => onOpenConsultation('Inquiry for AI Development & RAG Systems')}
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold text-black hover:bg-white/90 transition-all shadow-lg active:scale-95"
-                >
+              <div className="mt-8 pt-6 border-t border-hairline-raised">
+                <Button onClick={() => onOpenConsultation('Inquiry for AI Development & RAG Systems')}>
                   <span>Explore AI Development</span>
                   <ArrowRight size={14} />
-                </button>
+                </Button>
               </div>
             </div>
           </Reveal>
 
           {/* 18. Automation Section */}
           <Reveal delay={200}>
-            <div className="flex h-full flex-col justify-between rounded-3xl border border-white/20 bg-black/55 p-7 backdrop-blur-xl shadow-2xl sm:p-10">
+            <div className="flex h-full flex-col justify-between rounded-3xl border border-hairline-raised bg-overlay p-7 backdrop-blur-xl shadow-glass-lg sm:p-10">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-lg border border-amber-400/40 bg-amber-500/15 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-400 font-semibold">
+                <div className="inline-flex items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] text-amber-300 font-semibold">
                   <BrandLogo size="xs" bordered={false} />
                   <Zap size={13} />
                   <span>08 — Business Automation</span>
@@ -82,7 +80,7 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                 <h3 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                   LESS MANUAL.
                   <br />
-                  <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+                  <span className="font-semibold bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                     MORE MOMENTUM.
                   </span>
                 </h3>
@@ -103,7 +101,7 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                   ].map((feat) => (
                     <div
                       key={feat}
-                      className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 p-2.5 text-zinc-200 text-[11px]"
+                      className="flex items-center gap-2 rounded-lg border border-hairline bg-white/5 p-2.5 text-zinc-200 text-sm"
                     >
                       <Workflow size={12} className="text-amber-400 shrink-0" />
                       <span>{feat}</span>
@@ -112,14 +110,14 @@ export function SectionAiAutomation({ onOpenConsultation }: SectionAiAutomationP
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/15">
-                <button
+              <div className="mt-8 pt-6 border-t border-hairline-raised">
+                <Button
                   onClick={() => onOpenConsultation('Inquiry for Business Automation & Orchestration')}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-6 py-3 text-xs font-bold text-white hover:bg-white/20 transition-all shadow-lg active:scale-95 backdrop-blur-md"
+                  variant="secondary"
                 >
                   <span>Explore Automation</span>
                   <ArrowRight size={14} />
-                </button>
+                </Button>
               </div>
             </div>
           </Reveal>

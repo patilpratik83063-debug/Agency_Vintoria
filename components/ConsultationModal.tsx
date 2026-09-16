@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { X, CheckCircle2, Calendar, Mail, Building, User, ArrowRight, Loader2, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, CheckCircle2, ArrowRight, Loader2, Clock, User, Building, Mail, PhoneCall } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
-import { FounderAvatars, FounderCard } from './Founders';
+import { FounderAvatars } from './Founders';
+import { Button } from './ui/Button';
+import { Input, Select, Textarea, FieldLabel } from './ui/Field';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -11,13 +13,15 @@ interface ConsultationModalProps {
   initialMessage?: string;
 }
 
+const BUDGET_OPTIONS = ['$10k - $25k', '$25k - $50k', '$50k - $100k+', 'Flexible / Exploring Scope'];
+
 export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: ConsultationModalProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     timeline: 'Within 30 Days',
-    budget: '$15k - $30k',
+    budget: BUDGET_OPTIONS[0],
     preferredDate: 'Flexible / Next Available',
     message: initialMessage,
   });
@@ -26,6 +30,23 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [referenceId, setReferenceId] = useState('');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
+
+  // Escape closes + body scroll lock while open. The prefilled brief is
+  // applied via remount key from SiteShell (see components/SiteShell.tsx),
+  // so no state-sync effect is needed here.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -49,6 +70,7 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
 
       setStatus('success');
       setReferenceId(data.inquiry?.id || 'VIN-CONFIRMED');
+      setWhatsappUrl(data.whatsappFallbackUrl || '');
     } catch (err: unknown) {
       setStatus('error');
       const errMessage = err instanceof Error ? err.message : 'Error submitting brief. Please try again.';
@@ -61,7 +83,7 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
   return (
     <div
       id="consultation-modal-backdrop"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay-strong px-4 py-6 backdrop-blur-md animate-in fade-in duration-200"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -70,7 +92,8 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
         id="consultation-modal-dialog"
         role="dialog"
         aria-modal="true"
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/25 bg-[#0f0f11]/95 p-6 shadow-2xl backdrop-blur-2xl sm:p-8"
+        aria-labelledby="consultation-modal-title"
+        className="relative max-h-[calc(100dvh-3rem)] w-full max-w-lg overflow-y-auto rounded-3xl border border-hairline-raised bg-elevated/95 p-6 shadow-glass-lg backdrop-blur-2xl sm:p-8"
       >
         {/* Close Button */}
         <button
@@ -97,7 +120,7 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
               Your project details are on their way to Abhishek &amp; Pratik at Vintoria. Reference:{' '}
               <span className="font-mono text-emerald-400 font-bold">{referenceId}</span>.
             </p>
-            <div className="mt-6 rounded-2xl border border-white/20 bg-black/60 p-4 text-left text-xs text-zinc-200">
+            <div className="mt-6 rounded-2xl border border-hairline-raised bg-overlay p-4 text-left text-sm text-zinc-200">
               <div className="flex items-center gap-2 font-semibold text-white mb-1.5">
                 <Clock size={14} className="text-emerald-400" />
                 <span>Next Steps within 4 Business Hours:</span>
@@ -108,15 +131,27 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
                 <li>Calendar invitation for Google Meet discovery call</li>
               </ul>
             </div>
-            <button
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 flex items-center justify-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/15 py-2.5 text-sm font-semibold text-emerald-300 transition-colors hover:bg-emerald-400/25 hover:text-white"
+              >
+                <PhoneCall size={15} />
+                <span>Fast-track: send this brief on WhatsApp</span>
+              </a>
+            )}
+            <Button
+              size="lg"
+              className="mt-4 w-full"
               onClick={() => {
                 setStatus('idle');
                 onClose();
               }}
-              className="mt-6 w-full rounded-full bg-white py-3 text-sm font-bold text-black transition hover:bg-white/90"
             >
-              Return to Vintoria →
-            </button>
+              Return to Vintoria &rarr;
+            </Button>
           </div>
         ) : (
           <div>
@@ -126,50 +161,53 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
                 <div className="flex items-center gap-1.5">
                   <FounderAvatars size="xs" />
                 </div>
-                <span className="font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-medium pl-1">
+                <span className="font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-medium pl-1">
                   Connect with Founders
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white">Start a Project with Vintoria</h3>
-              <p className="mt-1 text-xs sm:text-sm text-zinc-200">
+              <h3 id="consultation-modal-title" className="text-2xl font-bold text-white">Start a Project with Vintoria</h3>
+              <p className="mt-1 text-sm text-zinc-200">
                 Directly connect with Abhishek Kogle (Founder) &amp; Pratik Patil (Co-Founder).
               </p>
             </div>
 
             {status === 'error' && (
-              <div className="mb-4 rounded-xl border border-red-500/40 bg-red-500/20 p-3 text-xs text-red-200">
+              <div className="mb-4 rounded-xl border border-red-500/40 bg-red-500/20 p-3 text-sm text-red-200">
                 {errorMessage}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-3.5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-200 mb-1">Your Name *</label>
+                  <FieldLabel htmlFor="modal-name">Your Name *</FieldLabel>
                   <div className="relative">
-                    <User size={14} className="absolute left-3 top-3 text-zinc-400" />
-                    <input
+                    <User size={14} className="pointer-events-none absolute left-3.5 top-3.5 text-zinc-400" />
+                    <Input
+                      id="modal-name"
                       required
+                      autoFocus
                       type="text"
                       placeholder="Your Name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full rounded-xl border border-white/20 bg-black/60 py-2 pl-9 pr-3 text-xs text-white placeholder-zinc-400 focus:border-white focus:outline-none"
+                      className="pl-9"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-200 mb-1">Work Email *</label>
+                  <FieldLabel htmlFor="modal-email">Work Email *</FieldLabel>
                   <div className="relative">
-                    <Mail size={14} className="absolute left-3 top-3 text-zinc-400" />
-                    <input
+                    <Mail size={14} className="pointer-events-none absolute left-3.5 top-3.5 text-zinc-400" />
+                    <Input
+                      id="modal-email"
                       required
                       type="email"
                       placeholder="you@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-xl border border-white/20 bg-black/60 py-2 pl-9 pr-3 text-xs text-white placeholder-zinc-400 focus:border-white focus:outline-none"
+                      className="pl-9"
                     />
                   </div>
                 </div>
@@ -177,49 +215,52 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-200 mb-1">Company / Project</label>
+                  <FieldLabel htmlFor="modal-company">Company / Project</FieldLabel>
                   <div className="relative">
-                    <Building size={14} className="absolute left-3 top-3 text-zinc-400" />
-                    <input
+                    <Building size={14} className="pointer-events-none absolute left-3.5 top-3.5 text-zinc-400" />
+                    <Input
+                      id="modal-company"
                       type="text"
                       placeholder="e.g. Apex Dynamics"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      className="w-full rounded-xl border border-white/20 bg-black/60 py-2 pl-9 pr-3 text-xs text-white placeholder-zinc-400 focus:border-white focus:outline-none"
+                      className="pl-9"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-200 mb-1">Target Budget</label>
-                  <select
+                  <FieldLabel htmlFor="modal-budget">Target Budget</FieldLabel>
+                  <Select
+                    id="modal-budget"
                     value={formData.budget}
                     onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full rounded-xl border border-white/20 bg-[#161619] py-2 px-3 text-xs text-white focus:border-white focus:outline-none"
                   >
-                    <option value="$10k - $25k">$10k - $25k</option>
-                    <option value="$25k - $50k">$25k - $50k</option>
-                    <option value="$50k - $100k+">$50k - $100k+</option>
-                    <option value="Flexible / Exploring Scope">Flexible / Exploring Scope</option>
-                  </select>
+                    {BUDGET_OPTIONS.map((b) => (
+                      <option key={b} value={b} className="bg-zinc-900 text-white">
+                        {b}
+                      </option>
+                    ))}
+                  </Select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-200 mb-1">Project Brief / Technical Goals</label>
-                <textarea
+                <FieldLabel htmlFor="modal-message">Project Brief / Technical Goals</FieldLabel>
+                <Textarea
+                  id="modal-message"
                   rows={3}
                   placeholder="Tell us what you are looking to build (e.g. AI-driven financial copilot, ultra-fast web flagship, SaaS platform, workflow automation)..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full rounded-xl border border-white/20 bg-black/60 p-3 text-xs text-white placeholder-zinc-400 focus:border-white focus:outline-none resize-none"
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
                 disabled={isLoading}
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-white py-3 text-xs sm:text-sm font-bold text-black transition-all hover:bg-white/90 disabled:opacity-50 shadow-lg active:scale-95"
+                size="lg"
+                className="mt-2 w-full"
               >
                 {isLoading ? (
                   <>
@@ -228,11 +269,11 @@ export function ConsultationModal({ isOpen, onClose, initialMessage = '' }: Cons
                   </>
                 ) : (
                   <>
-                    <span>START A PROJECT →</span>
+                    <span>Start a Project</span>
                     <ArrowRight size={15} />
                   </>
                 )}
-              </button>
+              </Button>
             </form>
           </div>
         )}

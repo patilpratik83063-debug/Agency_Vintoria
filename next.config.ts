@@ -8,24 +8,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  // Allow access to remote image placeholder.
+  // Remote image hosts for next/image (add as local assets migrate over).
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.higgs.ai',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'd8j0ntlcm91z4.cloudfront.net',
+        hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
       },

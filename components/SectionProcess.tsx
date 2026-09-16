@@ -89,21 +89,21 @@ export function SectionProcess() {
         {/* Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-black/60 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-white backdrop-blur-xl shadow-md">
+            <div className="inline-flex items-center gap-2 rounded-lg border border-hairline-raised bg-overlay px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
               <BrandLogo size="xs" bordered={false} />
               <Rocket size={13} className="text-emerald-400" />
               <span>Production Sprint Methodology</span>
             </div>
-            <h2 className="mt-4 text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-md">
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.06]">
               FROM IDEA
               <br />
-              <span className="font-semibold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
                 TO IMPACT.
               </span>
             </h2>
           </div>
 
-          <p className="max-w-md text-sm text-zinc-200 leading-relaxed md:text-right font-normal">
+          <p className="max-w-md text-base text-zinc-200 leading-relaxed md:text-right font-normal">
             Every product journey progresses through our deterministic 6-phase engineering framework, turning initial vision into scaled, measurable outcomes.
           </p>
         </div>
@@ -115,12 +115,14 @@ export function SectionProcess() {
             const isCurrent = activeStep === idx;
             return (
               <Reveal key={step.step} delay={100 + idx * 70}>
-                <div
+                <button
+                  type="button"
                   onClick={() => setActiveStep(idx)}
-                  className={`group relative flex h-full cursor-pointer flex-col justify-between rounded-2xl border p-6 backdrop-blur-xl transition-all duration-300 shadow-xl ${
+                  aria-pressed={isCurrent}
+                  className={`group relative flex h-full w-full flex-col justify-between rounded-2xl border p-6 text-left backdrop-blur-xl transition-[border-color,background-color,transform,box-shadow] duration-300 ease-smooth shadow-glass ${
                     isCurrent
-                      ? 'border-white/50 bg-black/70 ring-1 ring-white/30 scale-[1.02]'
-                      : 'border-white/20 bg-black/55 hover:border-white/40 hover:bg-black/65'
+                      ? 'border-hairline-bright bg-black/80 ring-1 ring-white/30 scale-[1.02]'
+                      : 'border-hairline-raised bg-overlay hover:border-hairline-bright hover:bg-black/80'
                   }`}
                 >
                   <div>
@@ -128,7 +130,7 @@ export function SectionProcess() {
                       <span className="font-mono text-2xl font-bold text-white/50 group-hover:text-emerald-400 transition-colors">
                         {step.step}
                       </span>
-                      <div className="rounded-lg border border-white/20 bg-white/10 p-2 text-white">
+                      <div className="rounded-lg border border-hairline-raised bg-white/10 p-2 text-white">
                         <Icon size={18} />
                       </div>
                     </div>
@@ -137,25 +139,25 @@ export function SectionProcess() {
                       {step.step} — {step.title}
                     </h3>
 
-                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-200 font-normal">
+                    <p className="mt-2 text-sm sm:text-base leading-relaxed text-zinc-200 font-normal">
                       {step.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 border-t border-white/15 pt-4">
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-emerald-400 font-semibold block mb-2">
+                  <div className="mt-6 border-t border-hairline pt-4">
+                    <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold block mb-2">
                       Key Deliverables
                     </span>
-                    <ul className="space-y-1.5 text-[11px] text-zinc-100">
+                    <ul className="space-y-1.5 text-sm text-zinc-100">
                       {step.deliverables.map((d) => (
                         <li key={d} className="flex items-start gap-1.5">
-                          <CheckCircle2 size={13} className="mt-0.5 text-emerald-400 shrink-0" />
+                          <CheckCircle2 size={13} className="mt-1 text-emerald-400 shrink-0" />
                           <span>{d}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </div>
+                </button>
               </Reveal>
             );
           })}

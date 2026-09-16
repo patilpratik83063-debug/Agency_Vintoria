@@ -127,19 +127,19 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 border-l-2 border-white bg-white/15 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-white backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 border-l-2 border-white bg-white/15 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-white backdrop-blur-xl">
             <BrandLogo size="xs" bordered={false} />
             <Terminal size={13} />
             <span>Interactive Engineering Scope & Architecture Calculator</span>
           </div>
-          <h2 className="mt-4 text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-md">
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.06]">
             Configure your technical blueprint.
             <br />
-            <span className="font-medium bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
               In real time.
             </span>
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-white/75 sm:text-base">
+          <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">
             Specify your architectural requirements, target velocity, and vision. Our intelligent
             estimator formulates sprint allocations, squad composition, and production stack recommendations.
           </p>
@@ -148,11 +148,11 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
         {/* Two-Column Interactive Matrix */}
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
           {/* Configurator Controls (7 cols) */}
-          <div className="space-y-8 rounded-2xl border border-white/20 bg-black/55 p-6 backdrop-blur-xl sm:p-8 lg:col-span-7 shadow-2xl">
+          <div className="space-y-8 rounded-2xl border border-hairline-raised bg-overlay p-6 backdrop-blur-xl sm:p-8 lg:col-span-7 shadow-glass-lg">
             {/* Step 1: Project Archetype */}
             <div>
-              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-semibold">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-[10px] text-black font-bold">
+              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-xs text-black font-bold">
                   1
                 </span>
                 <span>Select Project Archetype</span>
@@ -165,10 +165,10 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                       key={pt.id}
                       type="button"
                       onClick={() => setSelectedType(pt.title)}
-                      className={`rounded-xl border p-4 text-left transition-all ${
+                      className={`rounded-xl border p-4 text-left transition-colors duration-300 ${
                         isSelected
-                          ? 'border-white bg-white/20 text-white shadow-lg backdrop-blur-md'
-                          : 'border-white/20 bg-black/60 text-white/85 hover:border-white/40 hover:text-white'
+                          ? 'border-white bg-white/20 text-white shadow-glass backdrop-blur-xl'
+                          : 'border-hairline-raised bg-overlay text-white/85 hover:border-hairline-bright hover:text-white'
                       }`}
                     >
                       <div className="text-sm font-bold text-white">{pt.title}</div>
@@ -181,8 +181,8 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
 
             {/* Step 2: Technical Capabilities */}
             <div>
-              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-semibold">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-[10px] text-black font-bold">
+              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-xs text-black font-bold">
                   2
                 </span>
                 <span>Core Capabilities & Infrastructure</span>
@@ -195,10 +195,10 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                       key={feat}
                       type="button"
                       onClick={() => toggleFeature(feat)}
-                      className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-all ${
+                      className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition-colors duration-300 ${
                         isChecked
-                          ? 'border-white/60 bg-white/20 text-white shadow-sm'
-                          : 'border-white/20 bg-black/60 text-white/80 hover:border-white/40 hover:text-white'
+                          ? 'border-hairline-bright bg-white/20 text-white'
+                          : 'border-hairline-raised bg-overlay text-white/80 hover:border-hairline-bright hover:text-white'
                       }`}
                     >
                       <span
@@ -216,8 +216,8 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
             {/* Step 3: Timeline & Budget */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-semibold">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-[10px] text-black font-bold">
+                <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-xs text-black font-bold">
                     3
                   </span>
                   <span>Target Velocity</span>
@@ -225,7 +225,7 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                 <select
                   value={selectedTimeline}
                   onChange={(e) => setSelectedTimeline(e.target.value)}
-                  className="mt-3 w-full rounded-xl border border-white/25 bg-black/80 p-3 text-xs text-white font-medium focus:border-white focus:outline-none"
+                  className="mt-3 w-full rounded-xl border border-hairline-raised bg-overlay-soft p-3 text-sm text-white font-medium backdrop-blur-xl transition-colors duration-300 hover:border-hairline-bright focus:border-white"
                 >
                   {timelineOptions.map((t) => (
                     <option key={t} value={t} className="bg-zinc-900 text-white">
@@ -236,8 +236,8 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
               </div>
 
               <div>
-                <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-semibold">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-[10px] text-black font-bold">
+                <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-xs text-black font-bold">
                     4
                   </span>
                   <span>Capital Allocation</span>
@@ -245,7 +245,7 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                 <select
                   value={selectedBudget}
                   onChange={(e) => setSelectedBudget(e.target.value)}
-                  className="mt-3 w-full rounded-xl border border-white/25 bg-black/80 p-3 text-xs text-white font-medium focus:border-white focus:outline-none"
+                  className="mt-3 w-full rounded-xl border border-hairline-raised bg-overlay-soft p-3 text-sm text-white font-medium backdrop-blur-xl transition-colors duration-300 hover:border-hairline-bright focus:border-white"
                 >
                   {budgetTiers.map((b) => (
                     <option key={b} value={b} className="bg-zinc-900 text-white">
@@ -258,8 +258,8 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
 
             {/* Step 4: Vision / Brief */}
             <div>
-              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-emerald-400 font-semibold">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-[10px] text-black font-bold">
+              <label className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-emerald-300 font-semibold">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-400 text-xs text-black font-bold">
                   5
                 </span>
                 <span>Specific Vision or Edge Cases (Optional)</span>
@@ -269,7 +269,7 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                 placeholder="e.g. We need an AI-driven loan compliance validator with audited audit log, or high-performance WebGL product showcase..."
                 value={briefText}
                 onChange={(e) => setBriefText(e.target.value)}
-                className="mt-3 w-full rounded-xl border border-white/25 bg-black/70 p-3 text-xs text-white placeholder-zinc-400 focus:border-white focus:outline-none resize-none"
+                className="mt-3 w-full rounded-xl border border-hairline-raised bg-overlay-soft p-3 text-sm text-white placeholder-zinc-500 backdrop-blur-xl transition-colors duration-300 hover:border-hairline-bright focus:border-white resize-y min-h-28"
               />
             </div>
 
@@ -278,7 +278,7 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
               type="button"
               onClick={handleGenerateSpec}
               disabled={isLoading}
-              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-white py-3.5 text-sm font-bold text-black transition-all hover:bg-white/90 active:scale-[0.99] disabled:opacity-50 shadow-2xl"
+              className="flex w-full items-center justify-center gap-2.5 rounded-full bg-white py-3.5 text-sm font-bold text-black transition-colors duration-300 hover:bg-white/88 disabled:opacity-50 shadow-glass"
             >
               {isLoading ? (
                 <>
@@ -294,9 +294,9 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
             </button>
 
             {/* Founder review strip */}
-            <div className="flex items-center justify-center gap-3 rounded-xl border border-white/15 bg-black/50 px-4 py-2.5">
+            <div className="flex items-center justify-center gap-3 rounded-xl border border-hairline bg-overlay-soft px-4 py-2.5">
               <FounderAvatars size="xs" />
-              <span className="text-[11px] text-zinc-300">
+              <span className="text-xs text-zinc-300">
                 Every generated spec is <span className="font-semibold text-white">personally reviewed</span> by{' '}
                 <span className="font-semibold text-white">Abhishek & Pratik</span>
               </span>
@@ -304,21 +304,21 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
           </div>
 
           {/* Real-time Spec Output Terminal (5 cols) */}
-          <div className="flex flex-col justify-between rounded-2xl border border-white/20 bg-black/60 p-6 backdrop-blur-xl sm:p-8 lg:col-span-5 shadow-2xl">
+          <div className="flex flex-col justify-between rounded-2xl border border-hairline-raised bg-overlay-strong p-6 backdrop-blur-xl sm:p-8 lg:col-span-5 shadow-glass-lg">
             <div>
               {/* Terminal Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center justify-between border-b border-hairline pb-4">
                 <div className="flex items-center gap-2">
                   <div className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
                   <div className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
                   <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 flex items-center gap-1.5 font-mono text-[11px] text-white/60">
+                  <span className="ml-2 flex items-center gap-1.5 font-mono text-xs text-white/60">
                     <BrandLogo size="xs" bordered={false} />
                     vintoria-spec-engine.ts
                   </span>
                 </div>
                 {specResult && (
-                  <span className="font-mono text-[10px] text-emerald-400">
+                  <span className="font-mono text-xs text-emerald-300">
                     {specResult.specId}
                   </span>
                 )}
@@ -328,27 +328,27 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                 <div className="mt-5 space-y-5 animate-in fade-in duration-300">
                   {/* Executive Summary */}
                   <div>
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-semibold">
+                    <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold">
                       Executive Architectural Summary
                     </span>
-                    <p className="mt-1 text-xs sm:text-sm text-zinc-100 leading-relaxed font-normal">
+                    <p className="mt-1 text-sm text-zinc-100 leading-relaxed font-normal">
                       {specResult.summary}
                     </p>
                   </div>
 
                   {/* Milestones */}
                   <div>
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-semibold">
+                    <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold">
                       Sprint Roadmap ({specResult.estimatedWeeks} Weeks Projected)
                     </span>
                     <div className="mt-2 space-y-2">
                       {specResult.milestones.map((m) => (
-                        <div key={m.phase} className="rounded-lg border border-white/20 bg-black/60 p-2.5 text-xs">
+                        <div key={m.phase} className="rounded-lg border border-hairline-raised bg-overlay-soft p-2.5 text-sm">
                           <div className="flex items-center justify-between font-semibold text-white">
                             <span>{m.phase}</span>
-                            <span className="font-mono text-[10px] text-white/80">{m.duration}</span>
+                            <span className="font-mono text-xs text-white/80">{m.duration}</span>
                           </div>
-                          <div className="mt-1 text-[11px] text-zinc-200">{m.deliverables[0]}</div>
+                          <div className="mt-1 text-xs text-zinc-200">{m.deliverables[0]}</div>
                         </div>
                       ))}
                     </div>
@@ -356,21 +356,21 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
 
                   {/* Dedicated Squad */}
                   <div>
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-semibold">
+                    <span className="font-mono text-xs uppercase tracking-wider text-emerald-300 font-semibold">
                       Assigned Engineering Squad
                     </span>
                     <div className="mt-2 grid grid-cols-2 gap-2">
                       {specResult.squad.map((s) => (
-                        <div key={s.role} className="rounded-md border border-white/15 bg-white/10 p-2">
-                          <div className="text-[11px] font-semibold text-white truncate">{s.role}</div>
-                          <div className="text-[9px] font-mono text-emerald-400 font-bold">{s.allocation}</div>
+                        <div key={s.role} className="rounded-md border border-hairline bg-white/10 p-2">
+                          <div className="text-xs font-semibold text-white truncate">{s.role}</div>
+                          <div className="text-xs font-mono text-emerald-300 font-bold">{s.allocation}</div>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* SLA */}
-                  <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-200 pt-2 border-t border-white/15">
+                  <div className="flex items-center gap-2 text-sm font-mono text-zinc-200 pt-2 border-t border-hairline-raised">
                     <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
                     <span>{specResult.slaGuarantee}</span>
                   </div>
@@ -391,7 +391,7 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
 
             {/* Terminal Footer CTA */}
             {specResult ? (
-              <div className="mt-6 border-t border-white/10 pt-4">
+              <div className="mt-6 border-t border-hairline pt-4">
                 <button
                   type="button"
                   onClick={() =>
@@ -399,15 +399,15 @@ export function SectionEstimator({ onOpenConsultationWithBrief }: SectionEstimat
                       `[${specResult.specId}] Project: ${selectedType}\nTimeline: ${selectedTimeline}\nBudget: ${selectedBudget}\nSelected Stack: ${specResult.recommendedStack.slice(0, 3).join(', ')}\nClient Notes: ${briefText}`
                     )
                   }
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 py-3 text-xs font-semibold text-black transition-all hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-accent py-3 text-sm font-semibold text-black transition-colors duration-300 hover:bg-emerald-300 shadow-glass"
                 >
                   <span>Lock in This Spec & Book Brief</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
             ) : (
-              <div className="mt-6 border-t border-white/10 pt-4 text-center">
-                <span className="font-mono text-[10px] text-white/40">
+              <div className="mt-6 border-t border-hairline pt-4 text-center">
+                <span className="font-mono text-xs text-white/40">
                   Direct Principal Architect Review Included
                 </span>
               </div>
